@@ -8,3 +8,11 @@ RUN mkdir /go/src/app
 WORKDIR /go/src/app
 # ホストのファイルをコンテナの作業ディレクトリに移行
 ADD . /go/src/app
+
+# go.modファイルとgo.sumファイルの作成
+RUN go mod init github.com/Hiromu-Watanabe/go-tutorial
+RUN go mod tidy
+
+# ホットリロード（右記参考 : https://zenn.dev/h_sakano/articles/b38336d99f43e4e9e90b）
+# RUN go get github.com/oxequa/realize 
+# CMD ["realize", "start"]
