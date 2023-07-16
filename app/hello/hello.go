@@ -4,7 +4,7 @@ import (
     "fmt"
 		"log"
 
-    "github.com/Hiromu-Watanabe/go-tutorial/greetings"
+    "example.com/greetings"
 )
 
 func main() {
