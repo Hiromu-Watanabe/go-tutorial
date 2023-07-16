@@ -14,8 +14,8 @@ func Hello(name string) (string, error) {
 	}
 
 	// Create a message using a random format.
-	// message := fmt.Sprintf(randomFormat(), name)  // テスト成功パターン
-	message := fmt.Sprint(randomFormat()) // テスト失敗させるパターン
+	message := fmt.Sprintf(randomFormat(), name)  // テスト成功パターン
+	// message := fmt.Sprint(randomFormat()) // テスト失敗させるパターン
 	return message, nil
 }
 
