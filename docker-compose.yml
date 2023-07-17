@@ -8,3 +8,23 @@ services:
     volumes:
       - ./app:/go/src/app # マウントディレクトリ
     container_name: go-tutorial-app # コンテナ名の固定（indexが付かないように）
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: recordings
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    container_name: go-tutorial-db
+
+volumes:
+  db_data:
