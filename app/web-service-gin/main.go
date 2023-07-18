@@ -25,6 +25,8 @@ var albums = []album{
 func main() {
 	router := gin.Default()
 	router.GET("/albums", getAlbums)
+	router.GET("/albums/:id", getAlbumByID)
+	router.POST("/albums", postAlbums)
 
 	router.Run("0.0.0.0:8080")
 }
@@ -32,4 +34,32 @@ func main() {
 // すべてのアルバムのリストをJSONで返却
 func getAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, albums)
+}
+
+// リクエストボディで受け取ったJSONを新規アルバムとして追加
+func postAlbums(c *gin.Context) {
+  var newAlbum album
+
+  // BindJSONで受け取ったJSONをnewAlbumにバインド
+  if err := c.BindJSON(&newAlbum); err != nil {
+      return
+  }
+
+  // albumsスライスに新規アルバムを追加
+  albums = append(albums, newAlbum)
+  c.IndentedJSON(http.StatusCreated, newAlbum)
+}
+
+// リクエストパスのIDに一致するアルバムを探す
+func getAlbumByID(c *gin.Context) {
+	id := c.Param("id")
+
+	// アルバムデータのスライスから一致するアルバムを探す
+	for _, a := range albums {
+			if a.ID == id {
+					c.IndentedJSON(http.StatusOK, a)
+					return
+			}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 }
